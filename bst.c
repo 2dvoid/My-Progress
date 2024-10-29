@@ -12,22 +12,37 @@ struct node {
 // Function Declaration
 struct node *createNode (int n);
 void insert (struct node *root, int n);
+void preorder (struct node *root); 
 
 int main () {
 
-    int n;
-    printf ("Set data for root: ");
-    scanf ("%d", &n);
-
     // Create a new node:
+    int n;
+    printf ("----------Creating A New Binary Tree----------\n\n");
+    printf ("Set data to root: ");
+    scanf ("%d", &n);
     root = createNode(n);
-    printf ("Address of root: %p\n", root);
-    printf ("Value of root: %d\n", root->data);
+    printf ("\n----------New Tree Created---------\n");
+    printf ("Address of root is: %p\n", root);
+    printf ("Value of root is: %d\n\n", root->data);
+
 
     // Insert data:
-    printf ("Data to be inserted: ");
-    scanf ("%d", &n);
-    insert(root, n);
+    int data;
+    printf ("----------Insert Data to the Binary Tree----------\n\n");
+    printf ("Number of data to be inserted: ");
+    scanf("%d", &n);
+    while (n--) {
+        printf ("Enter data (No Duplicates): ");
+        scanf ("%d", &data);
+        insert(root, data);
+    }
+    printf ("\n----------All the Data were inserted----------\n\n");
+
+    // Preorder Traverse:
+    printf ("----------Traversing the Binary Tree in Preorder----------\n\n");
+    preorder(root);
+    printf ("\n\n----------The Binary Tree was Traversed----------\n\n");
 }
 
 
@@ -41,6 +56,7 @@ struct node *createNode (int n) {
 
 }
 
+
 // Inserting data:
 void insert (struct node *root, int n) {
     if(n<root->data) {
@@ -53,4 +69,15 @@ void insert (struct node *root, int n) {
         else insert(root->right, n);
     }
     else printf ("Fuck You.\n");
+}
+
+
+
+// Traverse Preorder:
+void preorder (struct node *root) {
+    if (root==NULL) return;
+    printf ("%d ", root->data);
+    preorder (root->left);
+    preorder (root->right);
+    
 }
