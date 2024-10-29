@@ -12,7 +12,9 @@ struct node {
 // Function Declaration
 struct node *createNode (int n);
 void insert (struct node *root, int n);
-void preorder (struct node *root); 
+void preorder (struct node *root);
+void inorder (struct node *root); 
+void postorder (struct node *root);
 
 int main () {
 
@@ -43,10 +45,20 @@ int main () {
     printf ("----------Traversing the Binary Tree in Preorder----------\n\n");
     preorder(root);
     printf ("\n\n----------The Binary Tree was Traversed----------\n\n");
+    
+    // Inorder Traverse:
+    printf ("----------Traversing the Binary Tree in Inorder----------\n\n");
+    inorder(root);
+    printf ("\n\n----------The Binary Tree was Traversed----------\n\n");
+    
+    // Postorder Traverse:
+    printf ("----------Traversing the Binary Tree in Postorder----------\n\n");
+    postorder(root);
+    printf ("\n\n----------The Binary Tree was Traversed----------\n\n");
 }
 
 
-// Function for creating new node
+// Create new node
 struct node *createNode (int n) {
     struct node *tmp = (struct node*) malloc(sizeof(struct node));
     tmp->data = n;
@@ -68,7 +80,7 @@ void insert (struct node *root, int n) {
         if (root->right==NULL) root->right = createNode(n);
         else insert(root->right, n);
     }
-    else printf ("Fuck You.\n");
+    else printf ("No Duplicates Allowed!!\n");
 }
 
 
@@ -81,3 +93,22 @@ void preorder (struct node *root) {
     preorder (root->right);
     
 }
+
+// Traverse Inorder:
+void inorder (struct node *root) {
+    if (root==NULL) return;
+    inorder (root->left);
+    printf ("%d ", root->data);
+    inorder (root->right);
+    
+}
+
+// Traverse Postorder:
+void postorder (struct node *root) {
+    if (root==NULL) return;
+    postorder (root->left);
+    postorder (root->right);
+    printf ("%d ", root->data);
+    
+}
+
