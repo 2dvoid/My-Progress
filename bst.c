@@ -16,6 +16,7 @@ void preorder (struct node *root);
 void inorder (struct node *root); 
 void postorder (struct node *root);
 struct node *search (int key, struct node *root); 
+struct node *findMinVal(struct node *root);
 
 int main () {
 
@@ -142,3 +143,60 @@ struct node *search (int key, struct node *root) {
         return search (key, root->right);
     }
 }
+
+
+// Delete:
+
+void delete (int key, struct node *root) {
+
+    if (root==NULL) return NULL;
+    if (key < root->data) root->left = delete (key, root->left);
+    else if (key > root->data) root->right = delete (key, root->right);
+    else {
+
+        // Leaf Node:
+        if (root->left==NULL && root->right==NULL) {
+            free (root);
+            return NULL;
+        }
+        
+
+        // Has left subtree
+        else if (root->left == NULL) {
+            struct node *tmp = root->left;
+            free (root);
+            return tmp;
+        }
+
+        // Has right subtree
+        else if (root->left == NULL) {
+            struct node *tmp = root->left;
+            free (root);
+            return tmp;
+        }
+
+        // Has both left and right subtree
+        // Return the minimum value from right subtree:
+        struct node *minval = findMinVal(root->right);
+        // Replace the data of the current tree with the minimum value from the right tree
+        root->data = minval->data;
+
+
+
+    }
+        
+}
+
+
+struct node *findMinVal(struct node *root) {
+    while (root->left != NULL) root = root->left;
+    return root;
+}
+
+struct node *deleteMin (struct node *root) {
+    while (root->left->left != NULL) root = root->left;
+    free (root->left);
+    root->left = NULL;
+
+}
+
